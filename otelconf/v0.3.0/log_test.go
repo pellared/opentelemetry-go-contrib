@@ -15,7 +15,6 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"runtime"
 	"testing"
 	"time"
 
@@ -760,10 +759,6 @@ func TestLoggerProviderOptions(t *testing.T) {
 }
 
 func Test_otlpGRPCLogExporter(t *testing.T) {
-	if runtime.GOOS == "windows" || runtime.GOOS == "darwin" {
-		// TODO (#8115): Fix the flakiness on Windows and MacOS.
-		t.Skip("Test is flaky on Windows and MacOS.")
-	}
 	type args struct {
 		ctx        context.Context
 		otlpConfig *OTLP
