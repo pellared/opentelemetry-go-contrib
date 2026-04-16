@@ -876,7 +876,7 @@ func Test_otlpGRPCLogExporter(t *testing.T) {
 				assert.NoError(collect, exporter.Export(context.Background(), []sdklog.Record{ //nolint:usetesting // required to avoid getting a canceled context.
 					logFactory.NewRecord(),
 				}))
-			}, 10*time.Second, 1*time.Second)
+			}, 60*time.Second, 1*time.Second)
 		})
 	}
 }

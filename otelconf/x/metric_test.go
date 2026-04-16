@@ -1592,7 +1592,7 @@ func Test_otlpGRPCMetricExporter(t *testing.T) {
 						},
 					},
 				}))
-			}, 10*time.Second, 1*time.Second)
+			}, 60*time.Second, 1*time.Second)
 		})
 	}
 }

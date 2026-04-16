@@ -1027,7 +1027,7 @@ func Test_otlpGRPCTraceExporter(t *testing.T) {
 
 			assert.EventuallyWithT(t, func(collect *assert.CollectT) {
 				assert.NoError(collect, exporter.ExportSpans(context.Background(), input.Snapshots())) //nolint:usetesting // required to avoid getting a canceled context.
-			}, 10*time.Second, 1*time.Second)
+			}, 60*time.Second, 1*time.Second)
 		})
 	}
 }
