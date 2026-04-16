@@ -539,11 +539,13 @@ func TestMetricAttributesFn_ClientAndServerIndependent(t *testing.T) {
 	assertAllMetricsHaveLabels(t, reader, serverLabelingDirection, map[string]string{
 		"origin": "test-origin",
 		"tier":   "premium",
+		"rpc.system.name": "grpc",
 	})
 
 	assertAllMetricsHaveLabels(t, reader, clientLabelingDirection, map[string]string{
 		"client.version": "v1.1.1",
 		"client.env":     "staging",
+		"rpc.system.name": "grpc",
 	})
 
 	assertAllMetricsDoNotHaveLabels(t, reader, serverLabelingDirection, map[string]string{
