@@ -262,10 +262,36 @@ func checkServerSpans(t *testing.T, sr *tracetest.SpanRecorder, addr string) {
 }
 
 func checkClientMetrics(t *testing.T, reader metric.Reader, addr, stabilityOptIn string) {
-	rm := metricdata.ResourceMetrics{}
-	err := reader.Collect(t.Context(), &rm)
-	assert.NoError(t, err)
-	require.Len(t, rm.ScopeMetrics, 1)
+	var rm metricdata.ResourceMetrics
+	require.Eventually(t, func() bool {
+		rm = metricdata.ResourceMetrics{}
+		if err := reader.Collect(t.Context(), &rm); err != nil {
+			return false
+		}
+		if len(rm.ScopeMetrics) == 0 || len(rm.ScopeMetrics[0].Metrics) == 0 {
+			return false
+		}
+		isOld := stabilityOptIn == "rpc/old" || stabilityOptIn == "rpc/dup"
+		isNew := stabilityOptIn == "" || stabilityOptIn == "rpc/dup"
+
+		var expectedCount int
+		if isOld {
+			expectedCount++
+		}
+		if isNew {
+			expectedCount++
+		}
+		if len(rm.ScopeMetrics[0].Metrics) != expectedCount {
+			return false
+		}
+		for _, m := range rm.ScopeMetrics[0].Metrics {
+			data, ok := m.Data.(metricdata.Histogram[float64])
+			if !ok || len(data.DataPoints) != 5 {
+				return false
+			}
+		}
+		return true
+	}, 1*time.Second, 10*time.Millisecond)
 
 	host, p, err := net.SplitHostPort(addr)
 	require.NoError(t, err)
@@ -383,7 +409,16 @@ func checkServerMetrics(t *testing.T, reader metric.Reader, stabilityOptIn strin
 		if isNew {
 			expectedCount++
 		}
-		return len(rm.ScopeMetrics[0].Metrics) == expectedCount
+		if len(rm.ScopeMetrics[0].Metrics) != expectedCount {
+			return false
+		}
+		for _, m := range rm.ScopeMetrics[0].Metrics {
+			data, ok := m.Data.(metricdata.Histogram[float64])
+			if !ok || len(data.DataPoints) != 5 {
+				return false
+			}
+		}
+		return true
 	}, 1*time.Second, 10*time.Millisecond)
 
 	require.Len(t, rm.ScopeMetrics, 1)
