@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- Stabilize `TestRemotelyControlledSampler_ImmediatelyUpdateOnStartup` in `go.opentelemetry.io/contrib/samplers/jaegerremote` by using polling instead of a fixed sleep.
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
 
 <!-- Released section -->
