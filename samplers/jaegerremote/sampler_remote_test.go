@@ -306,8 +306,7 @@ func TestRemotelyControlledSampler_ImmediatelyUpdateOnStartup(t *testing.T) {
 		sampler.RLock()
 		defer sampler.RUnlock()
 		s, ok := sampler.sampler.(*rateLimitingSampler)
-		assert.True(collect, ok, "sampler is not a rateLimitingSampler")
-		if ok {
+		if assert.True(collect, ok, "sampler is not a rateLimitingSampler") {
 			assert.Equal(collect, float64(100), s.maxTracesPerSecond, "unexpected maxTracesPerSecond")
 		}
 	}, 1*time.Second, 10*time.Millisecond)
