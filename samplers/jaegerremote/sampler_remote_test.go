@@ -301,6 +301,7 @@ func TestRemotelyControlledSampler_ImmediatelyUpdateOnStartup(t *testing.T) {
 		WithSamplingStrategyFetcher(fetcher),
 		withSamplingStrategyParser(parser),
 	)
+	t.Cleanup(sampler.Close)
 	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
 		sampler.RLock()
 		defer sampler.RUnlock()
@@ -310,7 +311,6 @@ func TestRemotelyControlledSampler_ImmediatelyUpdateOnStartup(t *testing.T) {
 			assert.Equal(collect, float64(100), s.maxTracesPerSecond, "unexpected maxTracesPerSecond")
 		}
 	}, 1*time.Second, 10*time.Millisecond)
-	sampler.Close()
 }
 
 func TestRemotelyControlledSampler_multiStrategyResponse(t *testing.T) {
