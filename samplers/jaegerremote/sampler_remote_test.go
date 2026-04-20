@@ -301,11 +301,14 @@ func TestRemotelyControlledSampler_ImmediatelyUpdateOnStartup(t *testing.T) {
 		WithSamplingStrategyFetcher(fetcher),
 		withSamplingStrategyParser(parser),
 	)
-	require.Eventually(t, func() bool {
+	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
 		sampler.RLock()
 		defer sampler.RUnlock()
 		s, ok := sampler.sampler.(*rateLimitingSampler)
-		return ok && s.maxTracesPerSecond == 100
+		assert.True(collect, ok)
+		if ok {
+			assert.Equal(collect, float64(100), s.maxTracesPerSecond)
+		}
 	}, 1*time.Second, 10*time.Millisecond)
 	sampler.Close()
 }
