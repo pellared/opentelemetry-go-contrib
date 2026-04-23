@@ -13,7 +13,7 @@ REGISTRY_BASE_URL = https://raw.githubusercontent.com/open-telemetry/opentelemet
 CONTRIB_REPO_URL = https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main
 
 GO = go
-TIMEOUT = 120
+TIMEOUT = 60
 
 # User to run as in docker images.
 DOCKER_USER=$(shell id -u):$(shell id -g)
@@ -145,9 +145,7 @@ build-tests/%: DIR=$*
 build-tests/%:
 	@echo "$(GO) build tests $(DIR)/..." \
 		&& cd $(DIR) \
-		&& $(GO) list ./... \
-		| grep -v third_party \
-		| xargs $(GO) test -vet=off -run xxxxxMatchNothingxxxxx >/dev/null
+		&& $(GO) test -vet=off -run xxxxxMatchNothingxxxxx ./... >/dev/null
 
 # Linting
 
@@ -260,8 +258,7 @@ test/%: DIR=$*
 test/%:
 	@echo "$(GO) test -timeout $(TIMEOUT)s $(ARGS) $(DIR)/..." \
 		&& cd $(DIR) \
-		&& $(GO) list ./... \
-		| xargs $(GO) test -timeout $(TIMEOUT)s $(ARGS)
+		&& $(GO) test -timeout $(TIMEOUT)s $(ARGS) ./...
 
 COVERAGE_MODE    = atomic
 COVERAGE_PROFILE = coverage.out
@@ -278,8 +275,7 @@ test-coverage/%:
 		&& CMD="$$CMD -coverpkg=go.opentelemetry.io/contrib/$$( dirname "$(DIR)" | sed -e "s/^\.\///g" )/..."; \
 		echo "$$CMD $(DIR)/..."; \
 		cd "$(DIR)" \
-		&& $(GO) list ./... \
-		| xargs $$CMD \
+		&& $$CMD ./... \
 		&& $(GO) tool cover -html=coverage.out -o coverage.html;
 
 # Releasing
