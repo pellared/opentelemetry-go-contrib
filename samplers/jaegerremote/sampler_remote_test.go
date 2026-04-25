@@ -199,6 +199,12 @@ func TestRemotelyControlledSampler(t *testing.T) {
 	}()
 
 	c <- time.Now() // force update based on timer
+	assert.Eventually(t, func() bool {
+		remoteSampler.RLock()
+		defer remoteSampler.RUnlock()
+		s, ok := remoteSampler.sampler.(*probabilisticSampler)
+		return ok && s.samplingRate == testDefaultSamplingProbability
+	}, 1*time.Second, 10*time.Millisecond)
 	remoteSampler.Close()
 	<-done
 
