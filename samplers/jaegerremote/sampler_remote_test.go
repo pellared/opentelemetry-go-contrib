@@ -199,12 +199,16 @@ func TestRemotelyControlledSampler(t *testing.T) {
 	}()
 
 	c <- time.Now() // force update based on timer
+	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
+		remoteSampler.RLock()
+		defer remoteSampler.RUnlock()
+		s, ok := remoteSampler.sampler.(*probabilisticSampler)
+		if assert.True(collect, ok) {
+			assert.Equal(collect, testDefaultSamplingProbability, s.samplingRate)
+		}
+	}, 1*time.Second, 10*time.Millisecond)
 	remoteSampler.Close()
 	<-done
-
-	s2, ok := remoteSampler.sampler.(*probabilisticSampler)
-	assert.True(t, ok)
-	assert.Equal(t, testDefaultSamplingProbability, s2.samplingRate, "Sampler should have been updated from timer")
 }
 
 func TestRemotelyControlledSampler_updateSampler(t *testing.T) {
