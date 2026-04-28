@@ -135,11 +135,9 @@ func runMockCollectorWithConfig(t *testing.T, mockConfig *mockConfig) *mockColle
 	mc := makeMockCollector(t, mockConfig)
 	collectortracepb.RegisterTraceServiceServer(srv, mc.traceSvc)
 	mc.ln = newListener(ln)
-	mc.wg.Add(1)
-	go func() {
-		defer mc.wg.Done()
+	mc.wg.Go(func() {
 		_ = srv.Serve(net.Listener(mc.ln))
-	}()
+	})
 
 	mc.endpoint = ln.Addr().String()
 	// srv.Stop calls Close on mc.ln.
