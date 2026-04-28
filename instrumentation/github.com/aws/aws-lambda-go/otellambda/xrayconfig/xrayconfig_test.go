@@ -169,7 +169,6 @@ func TestWrapEndToEnd(t *testing.T) {
 	defer func() {
 		_ = mockCollector.Stop()
 	}()
-	<-time.After(5 * time.Millisecond)
 
 	wrapped := otellambda.InstrumentHandler(customerHandler, WithRecommendedOptions(tp)...)
 	wrappedCallable := reflect.ValueOf(wrapped)
@@ -178,7 +177,10 @@ func TestWrapEndToEnd(t *testing.T) {
 	assert.Equal(t, "hello world", resp[0].Interface())
 	assert.Nil(t, resp[1].Interface())
 
+	assert.Eventually(t, func() bool {
+		return len(mockCollector.getResourceSpans()) == 1
+	}, time.Second, 10*time.Millisecond)
+
 	resSpans := mockCollector.getResourceSpans()
-	assert.Len(t, resSpans, 1)
 	assertSpanEqualsIgnoreTimeAndSpanID(t, &expectedResourceSpans, resSpans[0])
 }
