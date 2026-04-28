@@ -177,8 +177,8 @@ func TestWrapEndToEnd(t *testing.T) {
 	assert.Equal(t, "hello world", resp[0].Interface())
 	assert.Nil(t, resp[1].Interface())
 
-	assert.Eventually(t, func() bool {
-		return len(mockCollector.getResourceSpans()) == 1
+	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
+		assert.Len(collect, mockCollector.getResourceSpans(), 1)
 	}, time.Second, 10*time.Millisecond)
 
 	resSpans := mockCollector.getResourceSpans()
