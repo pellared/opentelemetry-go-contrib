@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixed
 
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
+- Replace hardcoded sleep with proper synchronization in the `xrayconfig` mock collector to stabilize tests. (#8802)
 
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
