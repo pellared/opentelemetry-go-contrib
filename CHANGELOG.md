@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixed
 
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
+- Stabilize `TestRemotelyControlledSampler` in `go.opentelemetry.io/contrib/samplers/jaegerremote` by ensuring asynchronous updates are processed before closing the sampler.
 
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
