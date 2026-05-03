@@ -8,6 +8,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixed
+- Stabilize `TestRemotelyControlledSampler` in `samplers/jaegerremote` by using `Eventually` and proper synchronization.
+
 ### Added
 
 - Add `error.type` attribute to `http.client.request.duration` for transport failures in `otelhttp`. (#8801)

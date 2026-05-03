@@ -214,9 +214,21 @@ func TestRemotelyControlledSampler(t *testing.T) {
 	agent.AddSamplingStrategy("client app",
 		getSamplingStrategyResponse(jaeger_api_v2.SamplingStrategyType_PROBABILISTIC, testDefaultSamplingProbability))
 	c <- time.Now() // force update based on timer
+
+	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
+		remoteSampler.RLock()
+		defer remoteSampler.RUnlock()
+		s, ok := remoteSampler.sampler.(*probabilisticSampler)
+		if assert.True(collect, ok, "sampler should have been updated to probabilistic") {
+			assert.Equal(collect, testDefaultSamplingProbability, s.samplingRate, "Sampler should have been updated from timer")
+		}
+	}, time.Second, 10*time.Millisecond)
+
 	remoteSampler.Close()
 	<-done
 
+	remoteSampler.RLock()
+	defer remoteSampler.RUnlock()
 	s2, ok := remoteSampler.sampler.(*probabilisticSampler)
 	assert.True(t, ok)
 	assert.Equal(t, testDefaultSamplingProbability, s2.samplingRate, "Sampler should have been updated from timer")
