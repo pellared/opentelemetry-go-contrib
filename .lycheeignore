@@ -8,4 +8,3 @@ file:///var/log/metrics.jsonl
 file:///var/log/traces.jsonl
 file:///path/to/file.jsonl
 https://raw.githubusercontent.com/open-telemetry/opentelemetry.io/main/content/en/registry
-https://github.com/open-telemetry/opentelemetry-go/releases/tag/v0.9.0
