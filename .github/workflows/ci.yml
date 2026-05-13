@@ -119,8 +119,7 @@ jobs:
         cp coverage.txt $TEST_RESULTS
         cp coverage.html $TEST_RESULTS
     - name: Upload coverage report
-      uses: codecov/codecov-action@v6.0.0
-      continue-on-error: true
+      uses: codecov/codecov-action@v5
       with:
         fail_ci_if_error: false
         files: ./coverage.txt
@@ -144,9 +143,9 @@ jobs:
             arch: amd64
           - os: macos-latest
             arch: arm64
-          - os: windows-latest
+          - os: windows-2022
             arch: "386"
-          - os: windows-latest
+          - os: windows-2022
             arch: amd64
     runs-on: ${{ matrix.platform.os }}
     steps:
