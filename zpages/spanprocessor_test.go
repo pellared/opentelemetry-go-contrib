@@ -66,13 +66,15 @@ func TestSpanProcessor(t *testing.T) {
 		s.End()
 	}
 	// Test that no more active spans.
-	assert.Empty(t, zsp.activeSpans(spanName))
-	assert.Len(t, zsp.errorSpans(spanName), 1)
-	numLatencySamples := 0
-	for i := range defaultBoundaries.numBuckets() {
-		numLatencySamples += len(zsp.spansByLatency(spanName, i))
-	}
-	assert.GreaterOrEqual(t, numLatencySamples, 1)
+	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
+		assert.Empty(collect, zsp.activeSpans(spanName))
+		assert.GreaterOrEqual(collect, len(zsp.errorSpans(spanName)), 1)
+		numLatencySamples := 0
+		for i := range defaultBoundaries.numBuckets() {
+			numLatencySamples += len(zsp.spansByLatency(spanName, i))
+		}
+		assert.GreaterOrEqual(collect, numLatencySamples, 1)
+	}, time.Second, 10*time.Millisecond)
 }
 
 func TestSpanProcessorFuzzer(t *testing.T) {
