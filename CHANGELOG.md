@@ -8,10 +8,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Fixed
-
-- Stabilize `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by using a non-exact length assertion for error spans, accounting for the 1-second sampling window.
-
 ### Added
 
 - Add `error.type` attribute to `http.client.request.duration` for transport failures in `otelhttp`. (#8801)
@@ -29,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- Stabilize `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by using a non-exact length assertion for error spans, accounting for the 1-second sampling window. (#9000)
 - Fix header attributes lost when using sub-spans in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#8797)
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
 
