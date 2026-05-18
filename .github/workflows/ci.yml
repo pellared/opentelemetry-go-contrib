@@ -121,10 +121,9 @@ jobs:
     - name: Upload coverage report
       uses: codecov/codecov-action@v6.0.0
       with:
-        fail_ci_if_error: false
+        fail_ci_if_error: true
         files: ./coverage.txt
         verbose: true
-      continue-on-error: true
     - name: Store coverage test output
       uses: actions/upload-artifact@v7
       with:

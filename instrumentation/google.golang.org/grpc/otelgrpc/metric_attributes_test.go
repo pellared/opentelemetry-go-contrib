@@ -10,6 +10,7 @@ import (
 	"net"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -635,23 +636,27 @@ type dpWithAttrs struct {
 func assertAllMetricsHaveLabels(t *testing.T, reader metric.Reader, direction int, expectedLabels map[string]string) {
 	t.Helper()
 
-	rm := metricdata.ResourceMetrics{}
-	err := reader.Collect(t.Context(), &rm)
-	require.NoError(t, err)
+	require.EventuallyWithT(t, func(collect *assert.CollectT) {
+		rm := metricdata.ResourceMetrics{}
+		err := reader.Collect(t.Context(), &rm)
+		assert.NoError(collect, err)
 
-	datapoints := collectDataPointsByMetric(rm, direction)
-	assert.NotEmpty(t, datapoints, "no metrics instrumented")
+		datapoints := collectDataPointsByMetric(rm, direction)
+		if !assert.NotEmpty(collect, datapoints, "no metrics instrumented") {
+			return
+		}
 
-	for _, dp := range datapoints {
-		for key, val := range expectedLabels {
-			attr, ok := dp.attrs[key]
-			t.Logf("metric %q has label %q", dp.metricName, attr)
-			assert.Truef(t, ok, "metric %q missing label %q", dp.metricName, key)
-			if ok {
-				assert.Equalf(t, val, attr, "metric %q has incorrect value for label %q: %s", dp.metricName, key, attr)
+		for _, dp := range datapoints {
+			for key, val := range expectedLabels {
+				attr, ok := dp.attrs[key]
+				t.Logf("metric %q has label %q", dp.metricName, attr)
+				assert.Truef(collect, ok, "metric %q missing label %q", dp.metricName, key)
+				if ok {
+					assert.Equalf(collect, val, attr, "metric %q has incorrect value for label %q: %s", dp.metricName, key, attr)
+				}
 			}
 		}
-	}
+	}, time.Second, 10*time.Millisecond)
 }
 
 func assertAllMetricsDoNotHaveLabels(t *testing.T, reader metric.Reader, direction int, notExpectedLabels map[string]string) {
