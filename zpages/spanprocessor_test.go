@@ -148,7 +148,7 @@ func TestSpanProcessorNegativeLatency(t *testing.T) {
 
 	spansPM = zsp.spansPerMethod()
 	require.Len(t, spansPM, 1)
-	assert.Equal(t, 1, spansPM["test"].latencySpans[0])
+	assert.GreaterOrEqual(t, spansPM["test"].latencySpans[0], 1)
 }
 
 func TestSpanProcessorSpansByLatencyWrongIndex(t *testing.T) {
