@@ -27,7 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Fix header attributes lost when using sub-spans in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#8797)
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
-- Fix flaky `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by allowing more than one sampled span, accounting for the 1-second sampling window. (#8872)
+- Fix flaky `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by allowing more than one sampled span, accounting for the 1-second sampling window.
 
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
