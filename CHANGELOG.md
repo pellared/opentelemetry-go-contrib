@@ -24,10 +24,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - The default span name is now `{method} {route}` (e.g. `GET /foo/{id}`) when a route pattern is available, or `{method}` (e.g. `GET`) otherwise.
 
 ### Fixed
-
 - Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 - Fix header attributes lost when using sub-spans in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#8797)
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
 
@@ -54,8 +52,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Normalize cached environment variable names in `go.opentelemetry.io/contrib/propagators/envcar`, aligning `Carrier.Keys` output with the carrier's normalized key format. (#8761)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix `go.opentelemetry.io/contrib/otelconf` Prometheus reader converting OTel dot-style label names (e.g. `service.name`) to underscore-style (`service_name`) in `target_info` when both `without_type_suffix` and `without_units` are set. Use `NoTranslation` instead of `UnderscoreEscapingWithoutSuffixes` to preserve dot-style label names while still suppressing metric name suffixes. (#8763)
 - Limit the request body size at 1MB in `go.opentelemetry.io/contrib/zpages`. (#8656)
@@ -87,8 +83,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Ignore informational response status codes (`100-199`) except `101 Switching Protocols` when storing the HTTP status code in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` and `go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux`. (#6913)
 - Make `Body` handling in `Transport` consistent with stdlib in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp`. (#8618)
 - Fix bucket boundaries for `rpc.server.call.duration` and `rpc.client.call.duration` in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc`. (#8642)
@@ -117,8 +111,6 @@ The next release will require at least [Go 1.25].
 - Add `const Version` in `go.opentelemetry.io/contrib/exporters/autoexport`. (#8612)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Change the `rpc.server.call.duration` metric value from milliseconds to seconds in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc`. (#8509)
 - Change the `rpc.response.status_code` attribute to the canonical `UPPER_SNAKE_CASE` format in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc`. (#8565)
@@ -159,8 +151,6 @@ The next release will require at least [Go 1.25].
 - Add `const Version` in `go.opentelemetry.io/contrib/bridges/otelslog`. (#8480)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix panic when passing nil `TracerProvider` or `MeterProvider` to `WithTracerProvider` or `WithMeterProvider` in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc`. (#8323)
 - `Transport` in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` now supports reading request body multiple times for subsequent requests that reuse `http.Request`. (#8352)
@@ -324,8 +314,6 @@ The next release will require at least [Go 1.24].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Improve the ECS detector correctness in `go.opentelemetry.io/contrib/detectors/aws/ecs`. (#7607)
 
 ### Deprecated
@@ -410,8 +398,6 @@ The next release will require at least [Go 1.24].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix EKS detector erroring outside of Kubernetes in `go.opentelemetry.io/contrib/detectors/aws/eks`. (#7483)
 - Fix data race when writing log entries with `context.Context` fields in `go.opentelemetry.io/contrib/bridges/otelzap`. (#7368)
 - Fix nil pointer dereference when `ClientTracer` did not have a span in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#7464)
@@ -476,8 +462,6 @@ The next release will require at least [Go 1.24].
 - Only sample spans when `Sampled=1` in `go.opentelemetry.io/contrib/propagators/aws/xray`. (#7318)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Record request duration in seconds rather than milliseconds for semconv v1.26.0, per [the specifications](https://github.com/open-telemetry/semantic-conventions/blob/6533b8a39e03e6925e080d5ca39234035cf87e70/docs/non-normative/http-migration.md#http-client-duration-metric) in the following packages. (#6942)
   - `go.opentelemetry.io/contrib/instrumentation/github.com/emicklei/go-restful/otelrestful`
@@ -593,8 +577,6 @@ migration](https://github.com/open-telemetry/semantic-conventions/blob/main/docs
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Use `context.Background()` as default context instead of nil in `go.opentelemetry.io/contrib/bridges/otellogr`. (#6527)
 - Convert Prometheus histogram buckets to non-cumulative otel histogram buckets in `go.opentelemetry.io/contrib/bridges/prometheus`. (#6685)
 - Don't start spans that never end for filtered out gRPC stats handler in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc`. (#6695)
@@ -609,8 +591,6 @@ migration](https://github.com/open-telemetry/semantic-conventions/blob/main/docs
 - Generate client metrics with semantic conventions `v1.26.0` in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` when `OTEL_SEMCONV_STABILITY_OPT_IN` is set to `http/dup`. (#6607)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix error logged by Jaeger remote sampler on empty or unset `OTEL_TRACES_SAMPLER_ARG` environment variable (#6511)
 - Relax minimum Go version to 1.22.0 in various modules. (#6595)
@@ -637,8 +617,6 @@ migration](https://github.com/open-telemetry/semantic-conventions/blob/main/docs
 - The `go.opentelemetry.io/contrib/config` now supports multiple schemas in subdirectories (i.e. `go.opentelemetry.io/contrib/config/v0.3.0`) for easier migration. (#6412)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix broken AWS presigned URLs when using instrumentation in `go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws`. (#5975)
 - Fixed the value for configuring the OTLP exporter to use `grpc` instead of `grpc/protobuf` in `go.opentelemetry.io/contrib/config`. (#6338)
@@ -670,8 +648,6 @@ migration](https://github.com/open-telemetry/semantic-conventions/blob/main/docs
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Transform nil attribute values to `log.Value` zero value instead of panicking in `go.opentelemetry.io/contrib/bridges/otellogrus`. (#6237)
 - Transform nil attribute values to `log.Value` zero value instead of panicking in `go.opentelemetry.io/contrib/bridges/otelzap`. (#6237)
 - Transform nil attribute values to `log.Value` zero value instead of `log.StringValue("<nil>")` in `go.opentelemetry.io/contrib/bridges/otelslog`. (#6246)
@@ -699,8 +675,6 @@ migration](https://github.com/open-telemetry/semantic-conventions/blob/main/docs
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Possible nil dereference panic in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#5965)
 - `logrus.Level` transformed to appropriate `log.Severity` in `go.opentelemetry.io/contrib/bridges/otellogrus`. (#6191)
 
@@ -723,8 +697,6 @@ migration](https://github.com/open-telemetry/semantic-conventions/blob/main/docs
 - Drop support for [Go 1.21]. (#6046, #6047)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Superfluous call to `WriteHeader` when flushing after setting a status code in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp`. (#6074)
 - Superfluous call to `WriteHeader` when writing the response body after setting a status code in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp`. (#6055)
@@ -756,8 +728,6 @@ The next release will require at least [Go 1.22].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Race condition when reading the HTTP body and writing the response in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp`. (#5916)
 
 ## [1.28.0/0.53.0/0.22.0/0.8.0/0.3.0/0.1.0] - 2024-07-02
@@ -783,8 +753,6 @@ The next release will require at least [Go 1.22].
 - Upgrade all dependencies of `go.opentelemetry.io/otel/semconv/v1.25.0` to `go.opentelemetry.io/otel/semconv/v1.26.0`. (#5847)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Custom attributes targeting metrics recorded by the `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` are not ignored anymore. (#5129)
 - The double setup in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/example` that caused duplicate traces. (#5564)
@@ -864,8 +832,6 @@ The next release will require at least [Go 1.22].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix bug where an empty exemplar was added to counters in `go.opentelemetry.io/contrib/bridges/prometheus`. (#5395)
 - Fix bug where the last histogram bucket was missing in `go.opentelemetry.io/contrib/bridges/prometheus`. (#5395)
 
@@ -878,8 +844,6 @@ The next release will require at least [Go 1.22].
   This module provides an OpenTelemetry logging bridge for "log/slog". (#5335)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Update all dependencies to address [GO-2024-2687]. (#5359)
 
@@ -907,8 +871,6 @@ The next release will require at least [Go 1.21].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Retrieving the body bytes count in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` does not cause a data race anymore. (#5080)
 
 ## [1.23.0/0.48.0/0.17.0/0.3.0] - 2024-02-06
@@ -932,8 +894,6 @@ The next release will require at least [Go 1.21].
 - The `RequestCount`, `RequestContentLength`, `ResponseContentLength`, `ServerLatency` constants in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` are deprecated. (#4707)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Do not panic in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc` if `MeterProvider` returns a `nil` instrument. (#4875)
 
@@ -965,8 +925,6 @@ The next release will require at least [Go 1.21].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix `NewServerHandler` in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc` to correctly set the span status depending on the gRPC status. (#4587)
 - The `stats.Handler` from `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc` now does not crash when receiving an unexpected context. (#4825)
 - Update `go.opentelemetry.io/contrib/detectors/aws/ecs` to fix the task ARN when it is not valid. (#3583)
@@ -979,8 +937,6 @@ The next release will require at least [Go 1.21].
 - Upgrade dependencies of OpenTelemetry Go to use the new [`v1.21.0`/`v0.44.0` release](https://github.com/open-telemetry/opentelemetry-go/releases/tag/v1.21.0). (#4582)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix `StreamClientInterceptor` in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc` to end the spans synchronously. (#4537)
 - Fix data race in stats handlers when processing messages received and sent metrics in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc`. (#4577)
@@ -1011,8 +967,6 @@ The next release will require at least [Go 1.21].
 - The interceptors (`UnaryClientInterceptor`, `StreamClientInterceptor`, `UnaryServerInterceptor`, `StreamServerInterceptor`, `WithInterceptorFilter`) are deprecated. Use stats handlers (`NewClientHandler`, `NewServerHandler`) instead. (#4534)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - The `go.opentelemetry.io/contrib/samplers/jaegerremote` sampler does not panic when the default HTTP round-tripper (`http.DefaultTransport`) is not `*http.Transport`. (#4045)
 - The `UnaryServerInterceptor` in `go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc` now sets gRPC status code correctly for the `rpc.server.duration` metric. (#4481)
@@ -1078,8 +1032,6 @@ The next release will require at least [Go 1.21].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - AWS XRay Remote Sampling to cap `quotaBalance` to 1x quota in `go.opentelemetry.io/contrib/samplers/aws/xray`. (#3651, #3652)
 - Do not panic when the HTTP request has the "Expect: 100-continue" header in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#3892)
 - Fix span status value set for non-standard HTTP status codes in modules listed below. (#3966)
@@ -1135,8 +1087,6 @@ The next release will require at least [Go 1.21].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - AWS XRay Remote Sampling to preserve previous rule if updated rule property has not changed in `go.opentelemetry.io/contrib/samplers/aws/xray`. (#3619, #3620)
 
 ## [1.16.0/0.41.0/0.10.0] - 2023-04-28
@@ -1152,8 +1102,6 @@ The next release will require at least [Go 1.21].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - The error received by `otelecho` middleware is then passed back to upstream middleware instead of being swallowed. (#3656)
 - Prevent taking from reservoir in AWS XRay Remote Sampler when there is zero capacity in `go.opentelemetry.io/contrib/samplers/aws/xray`. (#3684)
 - Fix `otelhttp.Handler` in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` to propagate multiple `WriteHeader` calls while persisting the initial `statusCode`. (#3580)
@@ -1165,8 +1113,6 @@ The next release will require at least [Go 1.21].
 - The `WithPublicEndpoint` and `WithPublicEndpointFn` options in `go.opentelemetry.io/contrib/instrumentation/github.com/emicklei/go-restful/otelrestful`. (#3563)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - AWS SDK rename attributes `aws.operation`, `aws.service` to `rpc.method`,`rpc.service` in `go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws`. (#3582, #3617)
 - AWS SDK span name to be of the format `Service.Operation` in `go.opentelemetry.io/contrib/instrumentation/github.com/aws/aws-sdk-go-v2/otelaws`. (#3582, #3521)
@@ -1195,8 +1141,6 @@ The next release will require at least [Go 1.19].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Remove use of deprecated `"math/rand".Seed` in `go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama/example/producer`. (#3396)
 - Do not assume "aws" partition in ecs detector to prevent panic in `go.opentelemetry.io/contrib/detectors/aws/ecs`. (#3167)
 - The span name of producer spans from `go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama` is corrected to use `publish` instead of `send`. (#3369)
@@ -1218,8 +1162,6 @@ The next release will require at least [Go 1.19].
 - `samplers/jaegerremote`: change to use protobuf parser instead of encoding/json to accept enums as strings. (#3183)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - The GCE detector in `go.opentelemetry.io/contrib/detectors/gcp` includes the "cloud.region" attribute when appropriate. (#3367)
 
@@ -1249,8 +1191,6 @@ The next release will require at least [Go 1.19].
 - [otelgin] Add support for filters to the `go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin` package to provide the way to control which inbound requests are traced. (#2965, #2963)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Set the status_code span attribute even if the HTTP handler hasn't written anything. (#2822)
 - Do not wrap http.NoBody in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp`, which fixes handling of that special request body. (#2983)
@@ -1311,8 +1251,6 @@ The next release will require at least [Go 1.19].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix the Jaeger propagator rejecting trace IDs that are both shorter than 128 bits and not exactly 64 bits long (while not being 0).
   Also fix the propagator rejecting span IDs shorter than 64 bits.
   This fixes compatibility with Jaeger clients encoding trace and span IDs as variable-length hex strings, as required by the Jaeger propagation format. (#2731)
@@ -1338,8 +1276,6 @@ The next release will require at least [Go 1.19].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix the `otelhttp`, `otelgin`, `otelmacaron`, `otelrestful` middlewares
   by using `SpanKindServer` when deciding the `SpanStatus`.
   This makes `4xx` response codes to not be an error anymore. (#2427)
@@ -1357,8 +1293,6 @@ The next release will require at least [Go 1.19].
   The `db.cassandra.keyspace` attribute is now transmitted as the `db.name` attribute. (#2222)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix the `otelmux` middleware by using `SpanKindServer` when deciding the `SpanStatus`.
   This makes `4xx` response codes to not be an error anymore. (#1973)
@@ -1384,8 +1318,6 @@ The next release will require at least [Go 1.19].
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - otelhttp: Avoid panic by adding nil check to `wrappedBody.Close` (#2164)
 
 ## [1.5.0/0.30.0/0.1.0] - 2022-03-16
@@ -1400,8 +1332,6 @@ The next release will require at least [Go 1.19].
 - Add OpenTracing baggage extraction to the OpenTracing propagator in `go.opentelemetry.io/contrib/propagators/ot`. (#1880)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix the `echo` middleware by using `SpanKind.SERVER` when deciding the `SpanStatus`.
   This makes `4xx` response codes to not be an error anymore. (#1848)
@@ -1424,8 +1354,6 @@ The next release will require at least [Go 1.19].
 - All metric instruments from the `go.opentelemetry.io/contrib/instrumentation/runtime` package have been renamed from `runtime.go.*` to `process.runtime.go.*` so as to comply with OpenTelemetry semantic conventions. (#1549)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Change the `http-server-duration` instrument in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` to record milliseconds instead of microseconds.
   This changes fixes the code to comply with the OpenTelemetry specification. (#1414, #1537)
@@ -1459,8 +1387,6 @@ We have updated the project minimum supported Go version to 1.16
 - `otelhttptrace.NewClientTrace` now uses `TracerProvider` from the parent context if one exists and none was set with `WithTracerProvider` (#874)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - The `"go.opentelemetry.io/contrib/detector/aws/ecs".Detector` no longer errors if not running in ECS. (#1428)
 - `go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux`
@@ -1501,8 +1427,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - The `go.opentelemetry.io/contrib/propagators/ot` propagator returns the words `true` or `false` for the `ot-tracer-sampled` header instead of numerical `0` and `1`. (#1358)
 
 ## [1.0.0/0.25.0] - 2021-10-06
@@ -1533,8 +1457,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix span not marked as error in `otelhttp.Transport` when `RoundTrip` fails with an error. (#950)
 
 ## [0.22.0] - 2021-07-26
@@ -1550,8 +1472,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Fix deadlocks and race conditions in `otelsarama.WrapAsyncProducer`.
   The `messaging.message_id` and `messaging.kafka.partition` attributes are now not set if a message was not processed. (#754) (#755) (#881)
 - Fix `otelsarama.WrapAsyncProducer` so that the messages from the `Errors` channel contain the original `Metadata`. (#754)
@@ -1559,8 +1479,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 ## [0.21.0] - 2021-06-18
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Dockerfile based examples for `otelgin` and `otelmacaron`. (#767)
 
@@ -1593,8 +1511,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - `otelmemcache` no longer sets span status to OK instead of leaving it unset. (#477)
 - Fix goroutine leak in gRPC `StreamClientInterceptor`. (#581)
 
@@ -1614,16 +1530,12 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Added failure message for AWS ECS resource detector for better debugging (#568)
 - Goroutine leak in gRPC StreamClientInterceptor while streamer returns an error. (#581)
 
 ## [0.16.0] - 2021-01-13
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fix module path for AWS ECS resource detector (#517)
 
@@ -1638,8 +1550,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 - Add gosec workflow to GitHub Actions (#507)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Fixes the body replacement in otelhttp to not to mutate a nil body. (#484)
 
@@ -1687,8 +1597,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 - Use `httpsnoop` in `go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux` to ensure `http.ResponseWriter` additional interfaces are preserved. (#388)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - The `go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho.Middleware` no longer sends duplicate errors to the global `ErrorHandler`. (#377, #364)
 - The import comment in `go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp` is now correctly quoted. (#379)
@@ -1751,8 +1659,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Update dependabot configuration to include newly added `bradfitz/gomemcache` package. (#226)
 - Correct `runtime` instrumentation name. (#241)
 
@@ -1765,8 +1671,6 @@ Update dependency on the `go.opentelemetry.io/otel` project to `v1.1.0`.
 - Initial Cortex exporter. (#202, #205, #210, #211, #215)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Bump google.golang.org/grpc from 1.30.0 to 1.31.0. (#166)
 - Bump go.mongodb.org/mongo-driver from 1.3.5 to 1.4.0 in /instrumentation/go.mongodb.org/mongo-driver. (#170)
@@ -1794,8 +1698,6 @@ This release upgrades its [go.opentelemetry.io/otel](https://github.com/open-tel
 
 ### Fixed
 
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
-
 - Bump github.com/aws/aws-sdk-go from 1.33.8 to 1.33.15 in /detectors/aws. (#155, #157, #159, #162)
 - Bump github.com/golangci/golangci-lint from 1.28.3 to 1.29.0 in /tools. (#146)
 
@@ -1804,8 +1706,6 @@ This release upgrades its [go.opentelemetry.io/otel](https://github.com/open-tel
 This release upgrades its [go.opentelemetry.io/otel](https://github.com/open-telemetry/opentelemetry-go/releases/tag/v0.9.0) dependency to v0.9.0.
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Bump github.com/emicklei/go-restful/v3 from 3.0.0 to 3.2.0 in /instrumentation/github.com/emicklei/go-restful. (#133)
 - Update dependabot configuration to correctly check all included packages. (#131)
@@ -1826,8 +1726,6 @@ This release upgrades its [go.opentelemetry.io/otel](https://github.com/open-tel
 - Move all `github.com` package instrumentation under a `github.com` directory. (#118)
 
 ### Fixed
-
-- Fix flakiness in `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by accounting for the 1-second sampling window.
 
 - Update README to include information about external instrumentation.
    To start, this includes native instrumentation found in the `go-redis/redis` package. (#117)

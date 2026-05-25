@@ -120,7 +120,6 @@ jobs:
         cp coverage.html $TEST_RESULTS
     - name: Upload coverage report
       uses: codecov/codecov-action@v6.0.0
-        continue-on-error: true
       continue-on-error: true
       with:
         fail_ci_if_error: false
