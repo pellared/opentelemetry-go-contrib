@@ -8,10 +8,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Fixed
-
-- Fix data race in `TestRemotelyControlledSampler_updateRateLimitingOrProbabilisticSampler` in `go.opentelemetry.io/contrib/samplers/jaegerremote` by using the sampler's lock during manual updates.
-
 ### Added
 
 - Add `error.type` attribute to `http.client.request.duration` for transport failures in `otelhttp`. (#8801)
@@ -28,6 +24,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - The default span name is now `{method} {route}` (e.g. `GET /foo/{id}`) when a route pattern is available, or `{method}` (e.g. `GET`) otherwise.
 
 ### Fixed
+
+- Fix data race in `TestRemotelyControlledSampler_updateRateLimitingOrProbabilisticSampler` in `go.opentelemetry.io/contrib/samplers/jaegerremote` by using the sampler lock during manual updates.
+- Upgrade `golang.org/x/net` to `v0.55.0` in `go.opentelemetry.io/contrib/detectors/autodetect` to fix GO-2026-5026.
 
 - Fix header attributes lost when using sub-spans in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#8797)
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
