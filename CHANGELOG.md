@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix data race in `TestRemotelyControlledSampler_updateRateLimitingOrProbabilisticSampler` in `go.opentelemetry.io/contrib/samplers/jaegerremote` by using the sampler's lock during manual updates.
+
 ### Added
 
 - Add `error.type` attribute to `http.client.request.duration` for transport failures in `otelhttp`. (#8801)

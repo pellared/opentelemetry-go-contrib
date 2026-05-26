@@ -507,8 +507,10 @@ func TestRemotelyControlledSampler_updateRateLimitingOrProbabilisticSampler(t *t
 				WithInitialSampler(testCase.initSampler),
 			)
 			defer remoteSampler.Close()
+			remoteSampler.Lock()
 			err := remoteSampler.updateSamplerViaUpdaters(testCase.res)
 			if testCase.shouldErr {
+				remoteSampler.Unlock()
 				require.Error(t, err)
 				return
 			}
@@ -523,6 +525,7 @@ func TestRemotelyControlledSampler_updateRateLimitingOrProbabilisticSampler(t *t
 				assert.True(t, es.Equal(remoteSampler.sampler),
 					"sampler.Equal: want=%+v, have=%+v", testCase.expectedSampler, remoteSampler.sampler)
 			}
+			remoteSampler.Unlock()
 		})
 	}
 }
