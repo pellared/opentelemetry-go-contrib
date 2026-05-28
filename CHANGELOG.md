@@ -13,10 +13,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `error.type` attribute to `http.client.request.duration` for transport failures in `otelhttp`. (#8801)
 - Add examples for prometheus compatibility document. (#8716)
 
-### Fixed
-
-- Stabilize `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by correctly accounting for the sampling window.
-
 ### Changed
 
 - Set error field as `record.SetErr` instead of a plain attribute in `go.opentelemetry.io/contrib/bridges/otellogrus`. (#8776)
@@ -29,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
+- Stabilize `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by correctly accounting for the sampling window.
 - Fix header attributes lost when using sub-spans in `go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace`. (#8797)
 - Validate `encoding` configuration for OTLP HTTP exporters in `go.opentelemetry.io/contrib/otelconf`. (#8772)
 
