@@ -508,21 +508,26 @@ func TestRemotelyControlledSampler_updateRateLimitingOrProbabilisticSampler(t *t
 				WithInitialSampler(testCase.initSampler),
 			)
 			defer remoteSampler.Close()
+			remoteSampler.Lock()
 			err := remoteSampler.updateSamplerViaUpdaters(testCase.res)
 			if testCase.shouldErr {
+				remoteSampler.Unlock()
 				require.Error(t, err)
 				return
 			}
 			if testCase.referenceEquivalence {
 				assert.Equal(t, testCase.expectedSampler, remoteSampler.sampler)
+				remoteSampler.Unlock()
 			} else {
 				type comparable interface {
 					Equal(other trace.Sampler) bool
 				}
 				es, esOk := testCase.expectedSampler.(comparable)
+				s := remoteSampler.sampler
+				remoteSampler.Unlock()
 				require.True(t, esOk, "expected sampler %+v must implement Equal()", testCase.expectedSampler)
-				assert.True(t, es.Equal(remoteSampler.sampler),
-					"sampler.Equal: want=%+v, have=%+v", testCase.expectedSampler, remoteSampler.sampler)
+				assert.True(t, es.Equal(s),
+					"sampler.Equal: want=%+v, have=%+v", testCase.expectedSampler, s)
 			}
 		})
 	}
