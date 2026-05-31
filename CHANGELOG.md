@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
-- Fix flakiness in `go.opentelemetry.io/contrib/zpages` `TestSpanProcessor` by using loose assertions for sampled spans.
+- Fix flakiness in `go.opentelemetry.io/contrib/zpages` `TestSpanProcessor` by using loose assertions for error spans.
 
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
