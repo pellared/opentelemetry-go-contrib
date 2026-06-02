@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixed
+
+- Stabilize `TestSpanProcessor` and `TestSpanProcessorFuzzer` in `go.opentelemetry.io/contrib/zpages` by using `assert.Eventually` and relaxing exact count assertions to account for the 1-second sampling window.
+
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
 

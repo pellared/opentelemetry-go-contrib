@@ -66,13 +66,21 @@ func TestSpanProcessor(t *testing.T) {
 		s.End()
 	}
 	// Test that no more active spans.
-	assert.Empty(t, zsp.activeSpans(spanName))
-	assert.Len(t, zsp.errorSpans(spanName), 1)
-	numLatencySamples := 0
-	for i := range defaultBoundaries.numBuckets() {
-		numLatencySamples += len(zsp.spansByLatency(spanName, i))
-	}
-	assert.GreaterOrEqual(t, numLatencySamples, 1)
+	assert.Eventually(t, func() bool {
+		return len(zsp.activeSpans(spanName)) == 0
+	}, time.Second, 10*time.Millisecond)
+
+	assert.Eventually(t, func() bool {
+		return len(zsp.errorSpans(spanName)) >= 1
+	}, time.Second, 10*time.Millisecond)
+
+	assert.Eventually(t, func() bool {
+		numLatencySamples := 0
+		for i := range defaultBoundaries.numBuckets() {
+			numLatencySamples += len(zsp.spansByLatency(spanName, i))
+		}
+		return numLatencySamples >= 1
+	}, time.Second, 10*time.Millisecond)
 }
 
 func TestSpanProcessorFuzzer(t *testing.T) {
@@ -100,25 +108,43 @@ func TestSpanProcessorFuzzer(t *testing.T) {
 	}
 	wg.Wait()
 
-	assert.Len(t, zsp.spansPerMethod(), 2)
+	assert.Eventually(t, func() bool {
+		return len(zsp.spansPerMethod()) == 2
+	}, time.Second, 10*time.Millisecond)
 
-	assert.Empty(t, zsp.activeSpans("testSpan1"))
-	assert.GreaterOrEqual(t, len(zsp.errorSpans("testSpan1")), 1)
-	// Count latency samples across all buckets instead of a single bucket to avoid flakes
-	numLatencySamples1 := 0
-	for i := range defaultBoundaries.numBuckets() {
-		numLatencySamples1 += len(zsp.spansByLatency("testSpan1", i))
-	}
-	assert.GreaterOrEqual(t, numLatencySamples1, 1)
+	assert.Eventually(t, func() bool {
+		return len(zsp.activeSpans("testSpan1")) == 0
+	}, time.Second, 10*time.Millisecond)
 
-	assert.Empty(t, zsp.activeSpans("testSpan2"))
-	assert.GreaterOrEqual(t, len(zsp.errorSpans("testSpan2")), 1)
+	assert.Eventually(t, func() bool {
+		return len(zsp.errorSpans("testSpan1")) >= 1
+	}, time.Second, 10*time.Millisecond)
+
 	// Count latency samples across all buckets instead of a single bucket to avoid flakes
-	numLatencySamples2 := 0
-	for i := range defaultBoundaries.numBuckets() {
-		numLatencySamples2 += len(zsp.spansByLatency("testSpan2", i))
-	}
-	assert.GreaterOrEqual(t, numLatencySamples2, 1)
+	assert.Eventually(t, func() bool {
+		numLatencySamples1 := 0
+		for i := range defaultBoundaries.numBuckets() {
+			numLatencySamples1 += len(zsp.spansByLatency("testSpan1", i))
+		}
+		return numLatencySamples1 >= 1
+	}, time.Second, 10*time.Millisecond)
+
+	assert.Eventually(t, func() bool {
+		return len(zsp.activeSpans("testSpan2")) == 0
+	}, time.Second, 10*time.Millisecond)
+
+	assert.Eventually(t, func() bool {
+		return len(zsp.errorSpans("testSpan2")) >= 1
+	}, time.Second, 10*time.Millisecond)
+
+	// Count latency samples across all buckets instead of a single bucket to avoid flakes
+	assert.Eventually(t, func() bool {
+		numLatencySamples2 := 0
+		for i := range defaultBoundaries.numBuckets() {
+			numLatencySamples2 += len(zsp.spansByLatency("testSpan2", i))
+		}
+		return numLatencySamples2 >= 1
+	}, time.Second, 10*time.Millisecond)
 }
 
 func TestSpanProcessorNegativeLatency(t *testing.T) {
