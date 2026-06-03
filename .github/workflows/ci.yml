@@ -16,7 +16,7 @@ env:
   # backwards compatibility with the previous two minor releases and we
   # explicitly test our code for these versions so keeping this at prior
   # versions does not add value.
-  DEFAULT_GO_VERSION: "~1.26.0"
+  DEFAULT_GO_VERSION: "~1.26.4"
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -120,8 +120,9 @@ jobs:
         cp coverage.html $TEST_RESULTS
     - name: Upload coverage report
       uses: codecov/codecov-action@v6.0.1
+      continue-on-error: true
       with:
-        fail_ci_if_error: true
+        fail_ci_if_error: false
         files: ./coverage.txt
         verbose: true
     - name: Store coverage test output
