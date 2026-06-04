@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix flakiness in `go.opentelemetry.io/contrib/zpages` tests by accounting for the 1-second sampling window in the `SpanProcessor` buckets.
+
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
 
