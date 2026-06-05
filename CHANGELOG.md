@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixed
+
+- Stabilize `TestSpanProcessor` in `go.opentelemetry.io/contrib/zpages` by using `GreaterOrEqual` for error span assertions.
+
 <!-- Released section -->
 <!-- Don't change this section unless doing release -->
 
