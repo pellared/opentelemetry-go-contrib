@@ -628,9 +628,9 @@ func TestEnvVarSettingForNewTracer(t *testing.T) {
 			expErrs:              []string{},
 		},
 		{
-			otelTraceSamplerArgs: "endpointhttp://localhost:14250,pollingIntervalMs=5x000,initialSamplingRate=0.xyz25,invalidKey=invalidValue",
+			otelTraceSamplerArgs: "endpoint-localhost:14250,pollingIntervalMs=5x000,initialSamplingRate=0.xyz25,invalidKey=invalidValue",
 			expErrs: []string{
-				"argument endpointhttp://localhost:14250 is not of type '<key>=<value>'",
+				"argument endpoint-localhost:14250 is not of type '<key>=<value>'",
 				"pollingIntervalMs parsing failed",
 				"initialSamplingRate parsing failed",
 				"invalid argument invalidKey in OTEL_TRACE_SAMPLER_ARG",
