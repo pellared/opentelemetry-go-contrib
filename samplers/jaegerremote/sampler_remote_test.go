@@ -214,12 +214,18 @@ func TestRemotelyControlledSampler(t *testing.T) {
 	agent.AddSamplingStrategy("client app",
 		getSamplingStrategyResponse(jaeger_api_v2.SamplingStrategyType_PROBABILISTIC, testDefaultSamplingProbability))
 	c <- time.Now() // force update based on timer
+
+	assert.EventuallyWithT(t, func(collect *assert.CollectT) {
+		remoteSampler.RLock()
+		defer remoteSampler.RUnlock()
+		s2, ok := remoteSampler.sampler.(*probabilisticSampler)
+		if assert.True(collect, ok, "Sampler should have been updated from timer") {
+			assert.Equal(collect, testDefaultSamplingProbability, s2.samplingRate, "Sampler should have been updated from timer")
+		}
+	}, time.Second, 10*time.Millisecond)
+
 	remoteSampler.Close()
 	<-done
-
-	s2, ok := remoteSampler.sampler.(*probabilisticSampler)
-	assert.True(t, ok)
-	assert.Equal(t, testDefaultSamplingProbability, s2.samplingRate, "Sampler should have been updated from timer")
 }
 
 func TestRemotelyControlledSampler_updateSampler(t *testing.T) {
@@ -622,9 +628,9 @@ func TestEnvVarSettingForNewTracer(t *testing.T) {
 			expErrs:              []string{},
 		},
 		{
-			otelTraceSamplerArgs: "endpointhttp://localhost:14250,pollingIntervalMs=5x000,initialSamplingRate=0.xyz25,invalidKey=invalidValue",
+			otelTraceSamplerArgs: "endpoint-localhost:14250,pollingIntervalMs=5x000,initialSamplingRate=0.xyz25,invalidKey=invalidValue",
 			expErrs: []string{
-				"argument endpointhttp://localhost:14250 is not of type '<key>=<value>'",
+				"argument endpoint-localhost:14250 is not of type '<key>=<value>'",
 				"pollingIntervalMs parsing failed",
 				"initialSamplingRate parsing failed",
 				"invalid argument invalidKey in OTEL_TRACE_SAMPLER_ARG",
